@@ -658,7 +658,8 @@ for (i in 2:nLong) {                                                            
     phi_natl.prop.sd    <- phi_natl.prop.sd * adaptJump(3, phi.acc/freq.val)      # Tune the proposal SD for log variance of random effects for national studies (log nu_"national")
     phi_subn.prop.sd    <- phi_subn.prop.sd * adaptJump(3, phi.acc/freq.val)      # Tune the proposal SD for log variance of random effects for subnational studies (log nu_s)
     phi_comm.prop.sd    <- phi_comm.prop.sd * adaptJump(3, phi.acc/freq.val)      # Tune the proposal SD for log variance of random effects for community studies (log nu_c)
-    alpha.prop.var		<- alpha.prop.var 	* adaptJump(n=rep(1,I), pjump=alpha.acc/freq.val, type='ben', i=i, K=freq.val) 	# Tune the proposal variance for latent variable (alpha)
+    alpha.prop.var		  <- alpha.prop.var 	* adaptJump(n=rep(1,I), pjump=alpha.acc/freq.val, type='ben', i=i, K=freq.val) 	# Tune the proposal variance for latent variable (alpha)
+    
     for (j in 1:ng) {
       sigma1_c.prop.sd[j] <- sigma1_c.prop.sd[j] * adaptJump(6, sigmas.acc[j]/freq.val)  # Tune proposal variances for log variances for country-specific random intercept in spline coefficients (log c)
       sigma2_c.prop.sd[j] <- sigma2_c.prop.sd[j] * adaptJump(6, sigmas.acc[j]/freq.val)  # Tune proposal variances for log variances for country-specific random slope in spline coefficients (log omiga_c)
@@ -687,7 +688,7 @@ for (i in 2:nLong) {                                                            
     - dnorm(alpha.current, mean = F.theta.Mm + R.age.spam %*% gamma.current,            # Log likelihood of existing state for latent variable (alpha)
             sd = sqrt(Sigma.diag), log=TRUE)
     + LogLik(alpha.star)                                                                # Log likelihood of binomial process given proposed alpha
-    - LogLik(alpha.current) )                                                           # Log likelihood of binomial process given existing alpha
+    - LogLik(alpha.current))                                                           # Log likelihood of binomial process given existing alpha
   accept <- which(runif(I) < R)                                                           # Metropolis-Hastings update: accept proposed state with probability R
   if (length(accept) > 0) {
     alpha.current[accept] <- alpha.star[accept]                                         # If accepted, update alpha
